@@ -16,9 +16,13 @@ class BlogController extends Controller
     public function indexAction(){
         $bp = new BlogPost();
         $bp->setTitle('ahahaha');
+        $bp->setContent('cococo');
+        $bp->setPublicationDate(new \DateTime());
 
         $bp2 = new BlogPost();
         $bp2->setTitle('ohohoho');
+        $bp2->setContent('cacaca');
+        $bp2->setPublicationDate(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
 

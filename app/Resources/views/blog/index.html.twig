@@ -3,6 +3,10 @@
 {% block body %}
     <h1>Meine tollen blogposts</h1>
     {% for bp in bps %}
-        <ul><li>{{ bp.title }}</li></ul>
+        <ul>
+            <li>{{ bp.title }}</li>
+            <li>{{ bp.content }}</li>
+            {{ bp.publicationdate | date("M d, Y, H:m:s") }}
+        </ul>
     {% endfor %}
 {% endblock %}
