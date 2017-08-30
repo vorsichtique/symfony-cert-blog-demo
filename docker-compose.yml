@@ -16,7 +16,7 @@ services:
     nginx:
         build: docker/nginx
         ports:
-            - 8080:8080
+            - 8080:80
         volumes:
             - ./logs/nginx/:/var/log/nginx:cached
             - .:/var/www/symfony:cached

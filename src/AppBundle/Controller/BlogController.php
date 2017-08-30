@@ -20,11 +20,18 @@ class BlogController extends Controller
         $bp2 = new BlogPost();
         $bp2->setTitle('ohohoho');
 
-      //  $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-       // $bps = $em->findAll();
+        $repo = $em->getRepository(BlogPost::class);
 
-        return $this->render('blog/index.html.twig', ['bps' => [$bp, $bp2]]);
+        $em->persist($bp);
+        $em->persist($bp2);
+
+        $em->flush();
+
+        $bps = $repo->findAll();
+
+        return $this->render('blog/index.html.twig', ['bps' => $bps]);
     }
 
 }
