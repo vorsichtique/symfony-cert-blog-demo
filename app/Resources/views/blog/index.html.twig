@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Meine tollen blogposts</h1>
+    {% for bp in bps %}
+        <ul><li>{{ bp.title }}</li></ul>
+    {% endfor %}
+{% endblock %}
