@@ -59,7 +59,7 @@ class BlogPost
     }
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $content;
 

@@ -8,6 +8,8 @@ services:
             MYSQL_DATABASE: symfony
             MYSQL_USER: symfony
             MYSQL_PASSWORD: symfony
+        ports:
+          - 3306:3306
     php:
         build: docker/php7-fpm
         volumes:
