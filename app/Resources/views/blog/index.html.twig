@@ -4,9 +4,9 @@
     <h1>Meine tollen blogposts</h1>
     {% for bp in bps %}
         <ul>
-            <li>{{ bp.title }}</li>
-            <li>{{ bp.content }}</li>
-            {{ bp.publicationdate | date("M d, Y, H:m:s") }}
+            <li><a href="{{ path('blog_show', {id: bp.id}) }}">{{ bp.title }}</a></li>
+            <li>{{ bp.content | slice(1,200) }} ...</li>
+            <li>{{ bp.publicationdate | date("M d, Y, H:m:s") }}</li>
         </ul>
     {% endfor %}
 {% endblock %}

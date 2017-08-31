@@ -27,6 +27,16 @@ class BlogController extends Controller
         return $this->render('blog/index.html.twig', ['bps' => $bps]);
     }
 
+    /**
+     * @Route("/blog/{id}", name="blog_show")
+     */
+    public function showAction($id){
+        $post = $this->getDoctrine()->getManager()->getRepository(BlogPost::class)->find($id);
+
+        return $this->render('blog/show.html.twig', ['post' => $post]);
+
+    }
+
     protected function addFixtures(){
         $i = 0;
         $em = $this->getDoctrine()->getManager();
