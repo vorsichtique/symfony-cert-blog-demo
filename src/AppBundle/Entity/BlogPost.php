@@ -101,4 +101,26 @@ class BlogPost
      * @Assert\DateTime
      */
     protected $publicationDate;
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $slug;
 }

@@ -28,10 +28,9 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/blog/{id}", name="blog_show")
+     * @Route("/blog/{slug}", name="blog_show")
      */
-    public function showAction($id){
-        $post = $this->getDoctrine()->getManager()->getRepository(BlogPost::class)->find($id);
+    public function showAction(BlogPost $post){
 
         return $this->render('blog/show.html.twig', ['post' => $post]);
 
@@ -53,6 +52,7 @@ class BlogController extends Controller
             $title = implode(' ', $title);
             $title = ucfirst($title);
             $bp->setTitle($title);
+            $bp->setSlug(str_replace(' ', '-', strtolower($title)));
 
             $content = file_get_contents('https://loripsum.net/api/plaintext');
             $bp->setContent($content);
