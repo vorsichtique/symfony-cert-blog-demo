@@ -6,7 +6,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\BlogPost;
-
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\BlogPostType;
 
 class BlogController extends Controller
 {
@@ -34,6 +35,24 @@ class BlogController extends Controller
 
         return $this->render('blog/show.html.twig', ['post' => $post]);
 
+    }
+
+    /**
+     * @Route("/blog/{id}/edit", name="blog_edit")
+     */
+    public function editAction(Request $request, BlogPost $post){
+        $form = $this->createForm(BlogPostType::class, $post);
+        $form->handleRequest($request);
+        dump($form);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('blog_index');
+        }
+
+        return $this->render('blog/edit.html.twig', ['form' => $form->createView()]);
     }
 
     protected function addFixtures(){
