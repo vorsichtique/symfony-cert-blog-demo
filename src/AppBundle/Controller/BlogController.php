@@ -52,7 +52,21 @@ class BlogController extends Controller
             return $this->redirectToRoute('blog_index');
         }
 
-        return $this->render('blog/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('blog/edit.html.twig',
+            ['form' => $form->createView(),
+                'bp' => $post
+            ]);
+    }
+
+    /**
+     * @Route("/blog/{id}/delete", name="blog_delete")
+     */
+    public function deleteAction(BlogPost $blogPost){
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($blogPost);
+        $em->flush();
+
+        return $this->redirectToRoute('blog_index');
     }
 
     protected function addFixtures(){

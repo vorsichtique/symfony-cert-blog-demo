@@ -11,4 +11,9 @@
     </button>
 {{ form_end(form) }}
 
+    <form action="{{ url('blog_delete', { id: bp.id}) }}">
+        <button type="submit">
+            delete
+        </button>
+    </form>
 {% endblock %}
