@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Tag;
 
 
 /**
@@ -13,6 +15,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BlogPost
 {
+    /**
+     * BlogPost constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
     /**
      * @return mixed
      */
@@ -40,6 +50,13 @@ class BlogPost
      * @ORM\Column(type="string")
      */
     protected $title;
+
+    /**
+     * @var Tag[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", cascade={"persist"})
+     */
+    protected $tags;
 
     /**
      * @return string
@@ -122,4 +139,28 @@ class BlogPost
      * @var string
      */
     protected $slug;
+
+    /**
+     * @return Tag[]|ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
 }

@@ -3,6 +3,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\BlogPost;
@@ -70,8 +71,18 @@ class BlogController extends Controller
     }
 
     protected function addFixtures(){
-        $i = 0;
         $em = $this->getDoctrine()->getManager();
+
+        $tagStrings = ['aaaaaa', 'bbbbbb', 'cccmcc', 'ooooo'];
+        $tags = [];
+
+        foreach ($tagStrings as $tag) {
+            $newTag = new Tag();
+            $newTag->setLabel($tag);
+            $tags[] = $newTag;
+        }
+
+        $i = 0;
         $titleOrg = file_get_contents('https://loripsum.net/api/1/plaintext');
         $titleOrg = strtolower($titleOrg);
         $titleOrg = preg_replace('/[^a-z\s]/', '', $titleOrg);
@@ -90,6 +101,10 @@ class BlogController extends Controller
             $content = file_get_contents('https://loripsum.net/api/plaintext');
             $bp->setContent($content);
             $bp->setPublicationDate(new \DateTime());
+
+            shuffle($tags);
+            $bp->addTag($tags[0]);
+
             $em->persist($bp);
 
             $i++;

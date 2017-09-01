@@ -3,4 +3,10 @@
 <p>{{ post.publicationdate | date("M d, Y, H:m:s") }}</p>
 <p>{{ post.content }}</p>
 
+<ul>
+    {% for tag in post.tags %}
+    <li>{{ tag.label }}</li>
+    {% endfor %}
+</ul>
+
 <a href="{{ path('blog_edit', {id: post.id}) }}">Edit</a>
