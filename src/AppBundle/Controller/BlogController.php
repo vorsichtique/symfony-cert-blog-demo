@@ -10,13 +10,16 @@ use AppBundle\Entity\BlogPost;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\BlogPostType;
 
+/**
+ * @Route("/blog")
+ */
 class BlogController extends Controller
 {
     const ITEMS_PER_PAGE = 3;
 
     /**
-     * @Route("/blog/", name="blog_index", defaults={"page": "1"})
-     * @Route("/blog/{page}", name="blog_index_paginated", requirements={"page": "\d+" })
+     * @Route("/", name="blog_index", defaults={"page": "1"})
+     * @Route("/{page}", name="blog_index_paginated", requirements={"page": "\d+" })
      */
     public function indexAction($page){
 
@@ -36,7 +39,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/blog/{slug}", name="blog_show")
+     * @Route("/{slug}", name="blog_show")
      */
     public function showAction(BlogPost $post){
 
@@ -45,7 +48,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/blog/{id}/edit", name="blog_edit")
+     * @Route("/{id}/edit", name="blog_edit")
      */
     public function editAction(Request $request, BlogPost $post){
         $form = $this->createForm(BlogPostType::class, $post);
@@ -68,7 +71,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/blog/{id}/delete", name="blog_delete")
+     * @Route("/{id}/delete", name="blog_delete")
      */
     public function deleteAction(BlogPost $blogPost){
         $em = $this->getDoctrine()->getManager();
