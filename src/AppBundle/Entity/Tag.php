@@ -53,4 +53,8 @@ class Tag
     {
         $this->id = $id;
     }
+
+    public function __toString() {
+        return $this->getLabel();
+    }
 }
