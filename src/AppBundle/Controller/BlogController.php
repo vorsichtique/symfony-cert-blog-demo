@@ -56,7 +56,9 @@ class BlogController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('blog_index');
+            $this->addFlash('success', 'buono!!');
+
+            return $this->redirectToRoute('blog_edit', ['id' => $post->getId()]);
         }
 
         return $this->render('blog/edit.html.twig',
