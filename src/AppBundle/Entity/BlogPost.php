@@ -11,7 +11,7 @@ use AppBundle\Entity\Tag;
 
 /**
  * Class BlogPost
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogPostRepository")
  */
 class BlogPost
 {

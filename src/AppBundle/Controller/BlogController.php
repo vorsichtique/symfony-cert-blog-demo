@@ -12,21 +12,27 @@ use AppBundle\Form\BlogPostType;
 
 class BlogController extends Controller
 {
+    const ITEMS_PER_PAGE = 3;
+
     /**
-     * @Route("/blog/", name="blog_index")
+     * @Route("/blog/", name="blog_index", defaults={"page": "1"})
+     * @Route("/blog/{page}", name="blog_index_paginated", requirements={"page": "\d+" })
      */
-    public function indexAction(){
+    public function indexAction($page){
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(BlogPost::class);
-        $bps = $repo->findAll();
+        $bps = $repo->findCurrent($page);
 
         if (count($bps) === 0) {
             $this->addFixtures();
-            $bps = $repo->findAll();
+            $bps = $repo->findCurrent($page);
         }
 
-        return $this->render('blog/index.html.twig', ['bps' => $bps]);
+        return $this->render('blog/index.html.twig',
+            [
+                'bps' => $bps]
+        );
     }
 
     /**
