@@ -7,8 +7,13 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-    <a href="{{ path('security_logout') }}">login</a>
-    <a href="{{ path('security_logout') }}">logout</a>
+    <a href="{{ path('homepage') }}">home</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('security_logout') }}">logout</a>
+    {% else %}
+        <a href="{{ path('login') }}">login</a>
+    {% endif %}
+
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="flash-{{ label }}">
