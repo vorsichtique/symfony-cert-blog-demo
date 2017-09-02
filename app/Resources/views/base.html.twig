@@ -7,6 +7,8 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    <a href="{{ path('security_logout') }}">login</a>
+    <a href="{{ path('security_logout') }}">logout</a>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="flash-{{ label }}">
