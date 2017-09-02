@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rss version="2.0">
+
+<channel>
+    <title>Malu's toller RSS feed</title>
+    <link>whatever.example.com</link>
+    <description>Kurze Beschreibung des Feeds</description>
+    <language>Sprache des Feeds (z. B. "de-de")</language>
+    <copyright>Autor des Feeds</copyright>
+    <pubDate>today</pubDate>
+    {% for bp in bps %}
+    <item>
+        <title>{{ bp.title }}</title>
+        <description>{{  bp.content | slice(1,30) }} </description>
+        <link>{{ path('blog_show', {slug: bp.slug}) }}</link>
+        <author>Autor des Artikels, E-Mail-Adresse</author>
+        <guid>{{ bp.id }}</guid>
+        <pubDate>{{ bp.publicationdate | date("M d, Y, H:m:s") }}</pubDate>
+    </item>
+    {% endfor %}
+
+</channel>
+
+</rss>

@@ -18,10 +18,11 @@ class BlogController extends Controller
     const ITEMS_PER_PAGE = 3;
 
     /**
-     * @Route("/", name="blog_index", defaults={"page": "1"})
-     * @Route("/{page}", name="blog_index_paginated", requirements={"page": "\d+" })
+     * @Route("/",  name="blog_index", defaults={"page": "1"})
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, name="blog_rss")
+     * @Route("/{page}.{_format}", name="blog_index_paginated", requirements={"page": "\d+" })
      */
-    public function indexAction($page){
+    public function indexAction($page, $_format = 'html'){
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(BlogPost::class);
@@ -32,7 +33,7 @@ class BlogController extends Controller
             $bps = $repo->findCurrent($page);
         }
 
-        return $this->render('blog/index.html.twig',
+        return $this->render('blog/index.' . $_format . '.twig',
             [
                 'bps' => $bps]
         );
