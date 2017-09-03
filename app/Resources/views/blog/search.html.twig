@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div><input id="search" type="text"/></div>
+
+    <ul id="results">
+
+    </ul>
+
+    <script type="text/javascript">
+        var search = document.getElementById('search');
+        search.addEventListener('keyup', function () {
+            var ul = document.getElementById('results');
+            ul.innerHTML = '';
+            var request = new XMLHttpRequest();
+            request.open('GET', '?q=' + this.value);
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            request.addEventListener('load', function (event) {
+                if (request.status === 200) {
+                    var results = JSON.parse(request.responseText);
+                    if (results.length > 0) {
+                        results.forEach(function (result) {
+                            var a = document.createElement('a');
+                            a.setAttribute('href', result.url);
+                            a.appendChild(document.createTextNode(result.title));
+                            var li = document.createElement('li');
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                        })
+                    }
+                }
+            });
+            request.send();
+        })
+    </script>
+{% endblock %}

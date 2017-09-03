@@ -10,6 +10,7 @@
     <a href="{{ path('homepage') }}">home</a>
     <a href="{{ path('blog_index') }}">blog</a>
     <a href="{{ path('admin_index') }}">admin</a>
+    <a href="{{ path('blog_search') }}">search</a>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a href="{{ path('security_logout') }}">logout</a>
     {% else %}

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\BlogPost;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\BlogPostType;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -41,7 +42,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/{slug}", name="blog_show")
+     * @Route("/posts/{slug}", name="blog_show")
      */
     public function showAction(BlogPost $post){
         dump($post);
@@ -95,7 +96,7 @@ dump($this->getUser());
     }
 
     /**
-     * @Route("/{id}/edit", name="blog_edit")
+     * @Route("/posts/{id}/edit", name="blog_edit")
      */
     public function editAction(Request $request, BlogPost $post){
         $form = $this->createForm(BlogPostType::class, $post);
@@ -118,7 +119,7 @@ dump($this->getUser());
     }
 
     /**
-     * @Route("/{id}/delete", name="blog_delete")
+     * @Route("posts/{id}/delete", name="blog_delete")
      */
     public function deleteAction(BlogPost $blogPost){
         $em = $this->getDoctrine()->getManager();
@@ -127,5 +128,29 @@ dump($this->getUser());
 
         return $this->redirectToRoute('blog_index');
     }
+
+    /**
+     * @Route("/search", name="blog_search")
+     */
+    public function searchAction(Request $request){
+        if (!$request->isXmlHttpRequest()) {
+            return $this->render('blog/search.html.twig');
+        }
+
+        $query = $request->query->get('q', '');
+        $posts = $this->getDoctrine()->getRepository(BlogPost::class)->findBySearchQuery($query);
+
+        $results = [];
+        foreach ($posts as $post) {
+           $results[] = [
+             'title' => $post->getTitle(),
+               'url' => $this->generateUrl('blog_show', ['slug' => $post->getSlug()]),
+
+           ];
+        }
+        return new JsonResponse($results);
+    }
+
+
 
 }
