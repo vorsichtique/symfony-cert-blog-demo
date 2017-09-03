@@ -21,6 +21,7 @@ class BlogPost
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -57,6 +58,31 @@ class BlogPost
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", cascade={"persist"})
      */
     protected $tags;
+
+    /**
+     * @var Comment[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Comment",
+     *      mappedBy="blogPost",
+     *      orphanRemoval=true
+     * )
+     */
+    protected $comments;
+
+    public function addComment($comment){
+        $comment->setBlogPost($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }    }
+
+    /**
+     * @return Comment[]|ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 
     /**
      * @return string

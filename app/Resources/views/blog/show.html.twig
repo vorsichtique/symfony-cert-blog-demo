@@ -13,6 +13,19 @@
     {% endfor %}
 </ul>
 
+<h4>comments:</h4>
+
+    {% for comment in post.comments %}
+        <ul>
+            <li> {{ comment.author.getUsername }}: {{ comment.content }} </li>
+        </ul>
+
+    {% endfor %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ render(controller('AppBundle:Blog:commentForm', {'id': post.id})) }}
+
+    {% endif %}
+
 <a href="{{ path('blog_edit', {id: post.id}) }}">Edit</a>
 
 {% endblock %}

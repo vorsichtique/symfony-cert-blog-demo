@@ -3,12 +3,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Tag;
+use AppBundle\Form\CommentType;
+use AppBundle\Repository\BlogPostRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\BlogPost;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\BlogPostType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/blog")
@@ -38,9 +44,54 @@ class BlogController extends Controller
      * @Route("/{slug}", name="blog_show")
      */
     public function showAction(BlogPost $post){
+        dump($post);
 
-        return $this->render('blog/show.html.twig', ['post' => $post]);
+        return $this->render('blog/show.html.twig',
+            ['post' => $post]
+        );
+    }
 
+    /**
+     * This controller is called directly via the render() function in the
+     * blog/post_show.html.twig template. That's why it's not needed to define
+     * a route name for it.
+     *
+     * The "id" of the Post is passed in and then turned into a Post object
+     * automatically by the ParamConverter.
+     *
+     */
+    public function commentFormAction(BlogPost $post){
+        $commentForm = $this->createForm(CommentType::class);
+
+        return $this->render('blog/_form.comment.html.twig', ['form' => $commentForm->createView(), 'post' => $post]);
+    }
+
+
+    /**
+     * @Route("/comment/{postSlug}/new", name="comment_new")
+     * @ParamConverter("blogPost", options={"mapping": {"postSlug": "slug"}})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     */
+    public function createCommentAction(Request $request, BlogPost $blogPost){
+        $comment = new Comment();
+        $comment->setCreationDate(new \DateTime());
+        $comment->setAuthor($this->getUser());
+        $blogPost->addComment($comment);
+        dump($blogPost);
+dump($this->getUser());
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            $this->addFlash('success', 'comment added');
+
+            return $this->redirectToRoute('blog_show', ['slug' => $blogPost->getSlug()]);
+        }
     }
 
     /**
