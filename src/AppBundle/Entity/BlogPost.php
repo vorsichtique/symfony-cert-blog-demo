@@ -22,6 +22,7 @@ class BlogPost
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->publicationDate = new \DateTime();
     }
 
     /**
