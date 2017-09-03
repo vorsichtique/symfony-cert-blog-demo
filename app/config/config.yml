@@ -10,6 +10,7 @@ parameters:
     app_locales: en|fr|de
 
 framework:
+    ide: 'phpstorm'
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'

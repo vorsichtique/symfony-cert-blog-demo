@@ -4,18 +4,19 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
-use AppBundle\Entity\Tag;
+use AppBundle\EventNames;
 use AppBundle\Form\CommentType;
-use AppBundle\Repository\BlogPostRepository;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\BlogPost;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\BlogPostType;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/blog")
@@ -74,13 +75,16 @@ class BlogController extends Controller
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      */
-    public function createCommentAction(Request $request, BlogPost $blogPost){
+    public function createCommentAction(
+        Request $request,
+        BlogPost $blogPost,
+        EventDispatcherInterface $eventDispatcher,
+        LoggerInterface $logger
+    ){
         $comment = new Comment();
         $comment->setCreationDate(new \DateTime());
         $comment->setAuthor($this->getUser());
         $blogPost->addComment($comment);
-        dump($blogPost);
-dump($this->getUser());
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -88,6 +92,12 @@ dump($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush();
+
+            $event = new GenericEvent($comment);
+
+            $eventDispatcher->dispatch(EventNames::COMMENT_CREATED, $event);
+
+            $logger->info(EventNames::COMMENT_CREATED . ' dispatched');
 
             $this->addFlash('success', 'comment added');
 
