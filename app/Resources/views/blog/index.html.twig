@@ -6,6 +6,7 @@
         <ul>
             <li><a href="{{ path('blog_show', {slug: bp.slug}) }}">{{ bp.title }}</a></li>
             <li>{{ bp.content | slice(1,200) }} ...</li>
+            <li> {{ bp.author.username }}</li>
             <li>{{ bp.publicationdate | date("M d, Y, H:m:s") }}</li>
             <li>
                 <ul>

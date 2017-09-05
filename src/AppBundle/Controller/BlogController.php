@@ -130,6 +130,7 @@ class BlogController extends Controller
 
     /**
      * @Route("posts/{id}/delete", name="blog_delete")
+     * @Security("is_granted('delete', blogPost)")
      */
     public function deleteAction(BlogPost $blogPost){
         $em = $this->getDoctrine()->getManager();

@@ -3,6 +3,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -16,6 +17,24 @@ class PostAndTagsData extends AbstractFixture implements ContainerAwareInterface
 
     public function load(ObjectManager $em)
     {
+        $passwordEncoder = $this->container->get('security.password_encoder');
+
+        $user1 = new User();
+        $user1->setUsername('malu');
+        $encodedPassword = $passwordEncoder->encodePassword($user1, 'kitten');
+        $user1->setPassword($encodedPassword);
+        $user1->setRoles(['ROLE_USER']);
+        $em->persist($user1);
+
+        $user2 = new User();
+        $user2->setUsername('admin');
+        $encodedPassword = $passwordEncoder->encodePassword($user2, 'kitten');
+        $user2->setPassword($encodedPassword);
+        $user2->setRoles(['ROLE_ADMIN']);
+        $em->persist($user2);
+
+        $em->flush();
+
         $tagStrings = ['aaaaaa', 'bbbbbb', 'cccmcc', 'ooooo'];
         $tags = [];
 
@@ -30,6 +49,7 @@ class PostAndTagsData extends AbstractFixture implements ContainerAwareInterface
         $titleOrg = strtolower($titleOrg);
         $titleOrg = preg_replace('/[^a-z\s]/', '', $titleOrg);
 
+        $author = $em->getRepository(User::class)->find(1);
 
         while($i < 10) {
             $bp = new BlogPost();
@@ -39,6 +59,7 @@ class PostAndTagsData extends AbstractFixture implements ContainerAwareInterface
             $title = implode(' ', $title);
             $title = ucfirst($title);
             $bp->setTitle($title);
+            $bp->setAuthor($author);
             $bp->setSlug(str_replace(' ', '-', strtolower($title)));
 
             $content = file_get_contents('https://loripsum.net/api/plaintext');

@@ -71,6 +71,28 @@ class BlogPost
      */
     protected $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $author;
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
     public function addComment($comment){
         $comment->setBlogPost($this);
         if (!$this->comments->contains($comment)) {

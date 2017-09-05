@@ -34,9 +34,9 @@ class AdminController extends Controller
 
         $form = $this->createForm(BlogPostType::class, $post);
         $form->handleRequest($request);
-        dump($post);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $post->setAuthor($this->getUser());
             $post->setSlug(str_replace(' ', '-', strtolower($post->getTitle())));
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
