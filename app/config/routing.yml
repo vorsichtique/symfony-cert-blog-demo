@@ -1,7 +1,7 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
-    prefix:   /{_locale}
+    prefix:   /app/{_locale}
     requirements:
         _locale: '%app_locales%'
     defaults:
@@ -14,3 +14,7 @@ homepage:
         _controller: FrameworkBundle:Template:template
         template:    default/index.html.twig
         _locale:     '%locale%'
+phpandwebsecuritybundle:
+    resource: '@PhpAndWebSecurityBundle/Controller/'
+    type: annotation
+    prefix: /php-websec/

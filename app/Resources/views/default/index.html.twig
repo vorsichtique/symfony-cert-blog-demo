@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <h2>Demo Blog</h2>
     <ul id="wrapper">
         <li><a href="{{ path('blog_index') }}">Browse Application</a></li>
         <li><a href="{{ path('admin_index') }}">Browse Backend</a></li>
+    </ul>
+
+    <h2>PhpAndWebSecurityBundle</h2>
+    <ul>
+        <li><a href="{{ path('php_websec_index') }}">PhpAndWebSecurityBundle</a></li>
     </ul>
 {% endblock %}
