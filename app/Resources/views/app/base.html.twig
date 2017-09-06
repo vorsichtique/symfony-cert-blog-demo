@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block outerbody %}
+<a href="{{ path('homepage') }}">home</a>
+<a href="{{ path('blog_index') }}">blog</a>
+<a href="{{ path('admin_index') }}">admin</a>
+<a href="{{ path('blog_search') }}">search</a>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <a href="{{ path('security_logout') }}">logout</a>
+{% else %}
+    <a href="{{ path('login') }}">login</a>
+{% endif %}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+
+{% endblock %}

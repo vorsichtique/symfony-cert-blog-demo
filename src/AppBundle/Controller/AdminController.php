@@ -21,7 +21,7 @@ class AdminController extends Controller
      * @return Response
      */
     public function indexAction(){
-        return $this->render('admin/index.html.twig');
+        return $this->render('app/admin/index.html.twig');
     }
 
     /**
@@ -45,7 +45,7 @@ class AdminController extends Controller
             return $this->redirectToRoute('blog_index');
         }
 
-        return $this->render('admin/new.html.twig', ['bp' => $post, 'form' => $form->createView()]);
+        return $this->render('app/admin/new.html.twig', ['bp' => $post, 'form' => $form->createView()]);
 
     }
 

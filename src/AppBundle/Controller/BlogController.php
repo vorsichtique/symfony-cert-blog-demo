@@ -36,7 +36,7 @@ class BlogController extends Controller
         $repo = $em->getRepository(BlogPost::class);
         $bps = $repo->findCurrent($page);
 
-        return $this->render('blog/index.' . $_format . '.twig',
+        return $this->render('app/blog/index.' . $_format . '.twig',
             [
                 'bps' => $bps]
         );
@@ -48,7 +48,7 @@ class BlogController extends Controller
     public function showAction(BlogPost $post){
         dump($post);
 
-        return $this->render('blog/show.html.twig',
+        return $this->render('app/blog/show.html.twig',
             ['post' => $post]
         );
     }
@@ -65,7 +65,7 @@ class BlogController extends Controller
     public function commentFormAction(BlogPost $post){
         $commentForm = $this->createForm(CommentType::class);
 
-        return $this->render('blog/_form.comment.html.twig', ['form' => $commentForm->createView(), 'post' => $post]);
+        return $this->render('app/blog/_form.comment.html.twig', ['form' => $commentForm->createView(), 'post' => $post]);
     }
 
 
@@ -122,7 +122,7 @@ class BlogController extends Controller
             return $this->redirectToRoute('blog_edit', ['id' => $post->getId()]);
         }
 
-        return $this->render('blog/edit.html.twig',
+        return $this->render('app/blog/edit.html.twig',
             ['form' => $form->createView(),
                 'bp' => $post
             ]);
@@ -145,7 +145,7 @@ class BlogController extends Controller
      */
     public function searchAction(Request $request){
         if (!$request->isXmlHttpRequest()) {
-            return $this->render('blog/search.html.twig');
+            return $this->render('app/blog/search.html.twig');
         }
 
         $query = $request->query->get('q', '');
