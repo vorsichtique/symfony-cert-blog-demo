@@ -8,7 +8,7 @@
             "AppBundle\\": "src/AppBundle",
             "PhpAndWebSecurityBundle\\": "src/PhpAndWebSecurityBundle"
         },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php", "app/MaluKernel.php" ]
     },
     "autoload-dev": {
         "psr-4": { "Tests\\": "tests/" },
