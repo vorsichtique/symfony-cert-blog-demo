@@ -6,7 +6,7 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
-            "PhpAndWebSecurityBundle\\": "src/PhpAndWebSecurityBundle"
+            "CertificationBundle\\": "src/CertificationBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php", "app/MaluKernel.php" ]
     },

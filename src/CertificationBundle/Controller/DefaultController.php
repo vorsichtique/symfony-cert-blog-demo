@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PhpAndWebSecurityBundle\Controller;
+namespace CertificationBundle\Controller;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,18 +12,12 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Route("/", name="php_websec_index")
+     * @Route("/", name="certification_index")
      * @return Response
      */
     public function indexAction(){
-        return new Response('hi');
+        return $this->render('certification/index.html.twig');
     }
 
-    /**
-     * @Route("/xss/", name="php_websec_xss")
-     * @return Response
-     */
-    public function xssAction(){
 
-    }
 }

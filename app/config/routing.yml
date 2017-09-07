@@ -14,7 +14,7 @@ homepage:
         _controller: FrameworkBundle:Template:template
         template:    default/index.html.twig
         _locale:     '%locale%'
-phpandwebsecuritybundle:
-    resource: '@PhpAndWebSecurityBundle/Controller/'
+certficatoin:
+    resource: '@CertificationBundle/Controller/'
     type: annotation
-    prefix: /php-websec/
+    prefix: /certifcation/

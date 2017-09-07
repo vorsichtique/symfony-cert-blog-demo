@@ -17,7 +17,7 @@ class MaluKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new AppBundle\AppBundle(),
-            new PhpAndWebSecurityBundle\PhpAndWebSecurityBundle(),
+            new CertificationBundle\CertificationBundle(),
             new Symfony\Bundle\WebServerBundle\WebServerBundle(),
             new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
             new Symfony\Bundle\DebugBundle\DebugBundle()
