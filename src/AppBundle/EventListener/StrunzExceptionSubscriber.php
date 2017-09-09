@@ -3,29 +3,29 @@
 
 namespace AppBundle\EventListener;
 
-
+use AppBundle\Exception\StrunzException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
-class StrunzExceptionListener implements EventSubscriberInterface
+class StrunzExceptionSubscriber implements EventSubscriberInterface
 {
     /**
      * @inheritDoc
      */
     public static function getSubscribedEvents()
     {
-        // TODO: Implement getSubscribedEvents() method.
         return [
             'kernel.exception' => 'onStrunzExceptionThrown'
         ];
     }
 
     public function onStrunzExceptionThrown(GetResponseForExceptionEvent $event){
-        $event->setResponse(
-            new Response('hahaha, ick hab dir in meinem eventlistener abjefangen!. eigentlich biste ne 404')
-        );
+        if ($event->getException() instanceof StrunzException) {
+            $event->setResponse(
+                new Response('hahaha, ick hab dir in meinem eventlistener abjefangen!')
+            );
+        }
     }
 
 }

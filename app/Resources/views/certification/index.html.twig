@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block outerbody %}
-<h1>ho</h1>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+                {{ "now"|date("H:i:s") }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <a href="{{ path('certification_dispatcher') }}">event dispatcher</a>
 {% endblock %}

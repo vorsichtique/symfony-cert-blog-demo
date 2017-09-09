@@ -14,7 +14,7 @@ homepage:
         _controller: FrameworkBundle:Template:template
         template:    default/index.html.twig
         _locale:     '%locale%'
-certficatoin:
+certification:
     resource: '@CertificationBundle/Controller/'
     type: annotation
-    prefix: /certifcation/
+    prefix: /certification/
