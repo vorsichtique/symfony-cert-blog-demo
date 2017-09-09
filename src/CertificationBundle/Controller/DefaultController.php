@@ -5,6 +5,7 @@ namespace CertificationBundle\Controller;
 
 use AppBundle\Exception\StrunzException;
 use CertificationBundle\Event\MaluEvent;
+use CertificationBundle\EventListener\ManualConfigurationSubscriber;
 use CertificationBundle\MaluService\ManualWiring;
 use CertificationBundle\MaluService\ParameterInjection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -72,6 +73,22 @@ class DefaultController extends Controller
         $mwsuper = $this->get('malu.manuelwiring.superuser');
 
         $this->addFlash('notice', $mwsuper->getUser() . " (taken from the superuser service)");
+
+        return $this->render('certification/index.html.twig');
+    }
+
+    /**
+     * @Route("/service/manuel-configuration", name="certification_service_manuel_configuration")
+     */
+    public function manuelConfigurationAction(EventDispatcherInterface $dispatcher)
+    {
+        $dispatcher->dispatch('malu.manualconfiguration.event');
+
+
+       // $this->addFlash('notice', $mw->getUser() . " (taken from the service alias that point to the standard user service)");
+
+
+       // $this->addFlash('notice', $mwsuper->getUser() . " (taken from the superuser service)");
 
         return $this->render('certification/index.html.twig');
     }

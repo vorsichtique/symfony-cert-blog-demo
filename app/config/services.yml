@@ -58,7 +58,11 @@ services:
     CertificationBundle\MaluService\ManualWiring: '@malu.manuelwiring.standarduser'
 
 
-
+    # how to register a subscriber withoout autoconfigure
+    CertificationBundle\EventListener\ManualConfigurationSubscriber:
+        autoconfigure: false
+        tags:
+            - { name: kernel.event_subscriber }
 
 
     # add more services, or override services that need manual wiring
