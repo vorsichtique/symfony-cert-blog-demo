@@ -1,7 +1,7 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    #parameter_name: value
+    parameter_injection_mail: 'hola@example.com'
 
 services:
     # default configuration for services in *this* file
@@ -35,6 +35,31 @@ services:
         resource: '../../src/CertificationBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
+
+
+    CertificationBundle\MaluService\ParameterInjection:
+        arguments:
+          $mail: %parameter_injection_mail%
+
+
+
+    # https://symfony.com/doc/current/service_container.html#explicitly-configuring-services-and-arguments
+    malu.manuelwiring.standarduser:
+        class: CertificationBundle\MaluService\ManualWiring
+        autowire: false
+        arguments:
+          $user: 'standarduser'
+    malu.manuelwiring.superuser:
+        class: CertificationBundle\MaluService\ManualWiring
+        public: true
+        autowire: false
+        arguments:
+          $user: 'superuser'
+    CertificationBundle\MaluService\ManualWiring: '@malu.manuelwiring.standarduser'
+
+
+
+
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:

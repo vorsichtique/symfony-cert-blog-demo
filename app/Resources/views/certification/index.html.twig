@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block outerbody %}
+    <p>
+        <a href="{{ path('homepage') }}">Home</a>
+    </p>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}">
-                {{ message }}
+                {{ message }}<br>
                 {{ "now"|date("H:i:s") }}
             </div>
         {% endfor %}
     {% endfor %}
 
-    <a href="{{ path('certification_dispatcher') }}">event dispatcher</a>
+    <ul>
+        <li><a href="{{ path('certification_dispatcher') }}">Event Dispatcher</a></li>
+        <li><a href="{{ path('certification_service_parameter_injection') }}">Service Parameter Injection</a></li>
+        <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
+    </ul>
 {% endblock %}
