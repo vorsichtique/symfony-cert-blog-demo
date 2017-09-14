@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Range;
 
 class DefaultController extends Controller
 {
@@ -109,6 +110,15 @@ class DefaultController extends Controller
                     'label' => 'Needs to be at least 3 chars long',
                     'constraints' => [
                         new Length(['min' => 3])
+                    ]
+                ]
+            )
+            ->add('input2', TextType::class,
+                [
+                    'required' => false,
+                    'label' => 'Number between 4 and 7',
+                    'constraints' => [
+                        new Range(['min' => 4, 'max' => 7])
                     ]
                 ]
             )
