@@ -4,6 +4,22 @@
     <p>
         <a href="{{ path('homepage') }}">Home</a>
     </p>
+
+    <ul>
+        <li><a href="{{ path('certification_dispatcher') }}">Event Dispatcher</a></li>
+        <li><a href="{{ path('certification_service_parameter_injection') }}">Service Parameter Injection</a></li>
+        <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
+        <li><a href="{{ path('certification_service_manuel_configuration') }}">Manuel Configuration</a></li>
+        <li><a href="{{ path('certification_basic_validation') }}">Basic validation</a></li>
+    </ul>
+
+    {% if form_default_validation is defined %}
+            {{ form_start(form_default_validation) }}
+            {{ form_widget(form_default_validation) }}
+            {{ form_end(form_default_validation) }}
+    {% endif %}
+    <br>
+    <br>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}">
@@ -12,11 +28,4 @@
             </div>
         {% endfor %}
     {% endfor %}
-
-    <ul>
-        <li><a href="{{ path('certification_dispatcher') }}">Event Dispatcher</a></li>
-        <li><a href="{{ path('certification_service_parameter_injection') }}">Service Parameter Injection</a></li>
-        <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
-        <li><a href="{{ path('certification_service_manuel_configuration') }}">Manuel Configuration</a></li>
-    </ul>
 {% endblock %}

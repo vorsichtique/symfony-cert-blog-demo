@@ -5,13 +5,17 @@ namespace CertificationBundle\Controller;
 
 use AppBundle\Exception\StrunzException;
 use CertificationBundle\Event\MaluEvent;
-use CertificationBundle\EventListener\ManualConfigurationSubscriber;
 use CertificationBundle\MaluService\ManualWiring;
 use CertificationBundle\MaluService\ParameterInjection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Length;
 
 class DefaultController extends Controller
 {
@@ -91,6 +95,32 @@ class DefaultController extends Controller
        // $this->addFlash('notice', $mwsuper->getUser() . " (taken from the superuser service)");
 
         return $this->render('certification/index.html.twig');
+    }
+
+    /**
+     * @Route("/service/basic-validation", name="certification_basic_validation")
+     */
+    public function basicValidationAction(Request $request){
+        $form = $this->createForm(FormType::class);
+        $form
+            ->add('input', TextType::class,
+                [
+                    'required' => false,
+                    'label' => 'Needs to be at least 3 chars long',
+                    'constraints' => [
+                        new Length(['min' => 3])
+                    ]
+                ]
+            )
+            ->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+
+        dump($form);
+
+        $this->addFlash('notice', 'Is form valid? ->' . $form->isValid());
+
+        return $this->render('certification/index.html.twig', ['form_default_validation' => $form->createView()]);
     }
 
 
