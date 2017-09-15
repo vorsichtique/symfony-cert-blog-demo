@@ -4,6 +4,7 @@
 namespace CertificationBundle\Controller;
 
 use AppBundle\Exception\StrunzException;
+use CertificationBundle\Entity\ValidationExample;
 use CertificationBundle\Event\MaluEvent;
 use CertificationBundle\MaluService\ManualWiring;
 use CertificationBundle\MaluService\ParameterInjection;
@@ -133,5 +134,27 @@ class DefaultController extends Controller
         return $this->render('certification/index.html.twig', ['form_default_validation' => $form->createView()]);
     }
 
+    /**
+     * @Route("/service/php-object-validation", name="certification_php_object_validation")
+     */
+    public function phpObjectValidationExampleAction(Request $request, ValidationExample $validationExample = null){
+        if (!$validationExample){
+            $validationExample = new ValidationExample();
+        }
+
+        $form = $this->createForm(FormType::class, $validationExample);
+        $form
+            ->add('name', TextType::class, ['required' => false])
+            ->add('submit', SubmitType::class);
+        $form->handleRequest($request);
+
+        dump($validationExample);
+        dump($form);
+
+        $this->addFlash('notice', 'Is form valid? ->' . $form->isValid());
+
+        return $this->render('certification/index.html.twig', ['form_php_object_validation' => $form->createView()]);
+
+    }
 
 }

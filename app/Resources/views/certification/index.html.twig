@@ -11,12 +11,20 @@
         <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
         <li><a href="{{ path('certification_service_manuel_configuration') }}">Manuel Configuration</a></li>
         <li><a href="{{ path('certification_basic_validation') }}">Basic validation</a></li>
+        <li><a href="{{ path('certification_php_object_validation') }}">PHP object validation</a></li>
     </ul>
 
     {% if form_default_validation is defined %}
             {{ form_start(form_default_validation) }}
             {{ form_widget(form_default_validation) }}
             {{ form_end(form_default_validation) }}
+    {% endif %}
+
+    {% if form_php_object_validation is defined %}
+        <h1>PHP Object Validation</h1>
+            {{ form_start(form_php_object_validation) }}
+            {{ form_widget(form_php_object_validation) }}
+            {{ form_end(form_php_object_validation) }}
     {% endif %}
     <br>
     <br>
