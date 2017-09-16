@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,6 +170,27 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         return $this->render('certification/index.html.twig', ['form_custom_constraint' => $form->createView()]);
+
+    }
+
+    /**
+     * @Route("/service/custom-constraint-and-group", name="certification_custom_constraint_and_group")
+     */
+    public function groupValidationAction(Request $request, CustomConstraintExample $cce){
+
+        $form = $this->createForm(
+            FormType::class,
+            $cce,
+            ['validation_groups' => ['malugroup']]
+        );
+
+        $form
+            ->add('number', IntegerType::class, ['required' => false])
+            ->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+
+        return $this->render('certification/index.html.twig', ['form_custom_constraint_and_group' => $form->createView()]);
 
     }
 

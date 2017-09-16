@@ -13,6 +13,7 @@
         <li><a href="{{ path('certification_basic_validation') }}">Basic validation</a></li>
         <li><a href="{{ path('certification_php_object_validation') }}">PHP object validation</a></li>
         <li><a href="{{ path('certification_custom_constraint') }}">Custom constraint</a></li>
+        <li><a href="{{ path('certification_custom_constraint_and_group') }}">Custom constraint and group validation</a></li>
     </ul>
 
     {% if form_default_validation is defined %}
@@ -33,6 +34,13 @@
         {{ form_start(form_custom_constraint) }}
         {{ form_widget(form_custom_constraint) }}
         {{ form_end(form_custom_constraint) }}
+    {% endif %}
+
+    {% if form_custom_constraint_and_group is defined %}
+        <h1>Custom Constraint and group</h1>
+        {{ form_start(form_custom_constraint_and_group) }}
+        {{ form_widget(form_custom_constraint_and_group) }}
+        {{ form_end(form_custom_constraint_and_group) }}
     {% endif %}
 
     <br>
