@@ -74,3 +74,14 @@ services:
             public: false
             arguments:
                 - '%kernel.logs_dir%/%kernel.environment%.log'
+
+    CertificationBundle\DataCollector\MaluCollector:
+        tags:
+            -
+                name:     data_collector
+                template: 'certification/toolbar.html.twig'
+                # must match the value returned by the getName() method
+                id:       'app.malu_collector'
+                # optional priority
+                # priority: 300
+        public: false

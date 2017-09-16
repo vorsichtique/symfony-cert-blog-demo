@@ -265,4 +265,11 @@ EOF;
 
     }
 
+    /**
+     * @Route("/data-collector", name="certification_data_collector")
+     */
+    public function dataCollectorAction(){
+        return $this->render('certification/index.html.twig');
+    }
+
 }
