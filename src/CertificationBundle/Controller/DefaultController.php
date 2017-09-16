@@ -5,6 +5,7 @@ namespace CertificationBundle\Controller;
 
 use AppBundle\Exception\StrunzException;
 use CertificationBundle\Entity\CustomConstraintExample;
+use CertificationBundle\Entity\SerializableEntity;
 use CertificationBundle\Entity\ValidationExample;
 use CertificationBundle\Event\MaluEvent;
 use CertificationBundle\MaluService\ManualWiring;
@@ -19,6 +20,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -214,6 +219,39 @@ class DefaultController extends Controller
 
         return $this->render('certification/index.html.twig', ['form_custom_constraint_and_group_and_sequence' => $form->createView()]);
 
+    }
+
+    /**
+     * @Route("/serializer", name="certification_serializer")
+     */
+    public function serializerAction(){
+        $se = new SerializableEntity();
+      //  $se->setName('heinz');
+      //  $se->setNumber(12345);
+      //  $se->setIsAwesome(false);
+
+        $data = <<<EOF
+<person>
+    <awesome>0</awesome>
+    <name>heinz</name>
+    <number>123456</number>
+</person>
+EOF;
+
+        $encoders = [new JsonEncoder(), new XmlEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $serializer->deserialize($data, SerializableEntity::class, 'xml', array('object_to_populate' => $se));
+
+        $json = $serializer->serialize($se, 'json');
+        $xml = $serializer->serialize($se, 'xml');
+
+        return $this->render('certification/index.html.twig',
+            [
+                'serialized_json' => $json,
+                'serialized_xml' => $xml]
+        );
     }
 
 }

@@ -6,6 +6,7 @@
     </p>
 
     <ul>
+        <li><a href="{{ path('certification_exception') }}">Strunz Exception</a></li>
         <li><a href="{{ path('certification_dispatcher') }}">Event Dispatcher</a></li>
         <li><a href="{{ path('certification_service_parameter_injection') }}">Service Parameter Injection</a></li>
         <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
@@ -15,6 +16,7 @@
         <li><a href="{{ path('certification_custom_constraint') }}">Custom constraint</a></li>
         <li><a href="{{ path('certification_custom_constraint_and_group') }}">Custom constraint and group validation</a></li>
         <li><a href="{{ path('certification_custom_constraint_and_group_and_sequence') }}">Custom constraint and group validation and group sequence</a></li>
+        <li><a href="{{ path('certification_serializer') }}">Serializer</a></li>
     </ul>
 
     {% if form_default_validation is defined %}
@@ -55,6 +57,12 @@
         {{ form_start(form_custom_constraint_and_group_and_sequence) }}
         {{ form_widget(form_custom_constraint_and_group_and_sequence) }}
         {{ form_end(form_custom_constraint_and_group_and_sequence) }}
+    {% endif %}
+
+    {% if serialized_json is defined and serialized_json %}
+        {{ serialized_json }}
+        <br>
+        {{ serialized_xml }}
     {% endif %}
 
     <br>
