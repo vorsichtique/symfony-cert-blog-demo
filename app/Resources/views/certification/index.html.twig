@@ -17,6 +17,7 @@
         <li><a href="{{ path('certification_custom_constraint_and_group') }}">Custom constraint and group validation</a></li>
         <li><a href="{{ path('certification_custom_constraint_and_group_and_sequence') }}">Custom constraint and group validation and group sequence</a></li>
         <li><a href="{{ path('certification_serializer') }}">Serializer</a></li>
+        <li><a href="{{ path('certification_process') }}">Process</a></li>
     </ul>
 
     {% if form_default_validation is defined %}
@@ -60,9 +61,13 @@
     {% endif %}
 
     {% if serialized_json is defined and serialized_json %}
-        {{ serialized_json }}
+        <pre>{{ serialized_json }}</pre>
         <br>
-        {{ serialized_xml }}
+        <pre>{{ serialized_xml }}</pre>
+    {% endif %}
+
+    {% if process_output is defined %}
+        <pre>{{ process_output }}</pre>
     {% endif %}
 
     <br>

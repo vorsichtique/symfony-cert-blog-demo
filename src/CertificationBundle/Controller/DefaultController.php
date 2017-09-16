@@ -14,12 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -252,6 +251,18 @@ EOF;
                 'serialized_json' => $json,
                 'serialized_xml' => $xml]
         );
+    }
+
+    /**
+     * @Route("/process", name="certification_process")
+     */
+    public function processAction(){
+
+        $process = new Process('ls -la');
+        $process->run();
+
+        return $this->render('certification/index.html.twig', ['process_output' => $process->getOutput()]);
+
     }
 
 }
