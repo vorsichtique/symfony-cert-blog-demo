@@ -134,7 +134,6 @@ class DefaultController extends Controller
 
         $form->handleRequest($request);
 
-        dump($form);
 
         $this->addFlash('notice', 'Is form valid? ->' . $form->isValid());
 
