@@ -185,12 +185,34 @@ class DefaultController extends Controller
         );
 
         $form
-            ->add('number', IntegerType::class, ['required' => false])
+            ->add('secondTitle', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class);
 
         $form->handleRequest($request);
 
         return $this->render('certification/index.html.twig', ['form_custom_constraint_and_group' => $form->createView()]);
+
+    }
+
+    /**
+     * @Route("/service/custom-constraint-and-group-and-sequence", name="certification_custom_constraint_and_group_and_sequence")
+     */
+    public function groupSequenceValidationAction(Request $request, CustomConstraintExample $cce){
+
+        $form = $this->createForm(
+            FormType::class,
+            $cce,
+            ['validation_groups' => ['malugroup', 'maluSecondGroup']]
+        );
+
+        $form
+            ->add('secondTitle', TextType::class, ['required' => false])
+            ->add('thirdTitle', TextType::class, ['required' => false])
+            ->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+
+        return $this->render('certification/index.html.twig', ['form_custom_constraint_and_group_and_sequence' => $form->createView()]);
 
     }
 

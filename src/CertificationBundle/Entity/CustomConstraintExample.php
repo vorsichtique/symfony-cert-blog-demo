@@ -6,6 +6,9 @@ namespace CertificationBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use CertificationBundle\Validator\Constraint as MaluAssert;
 
+/**
+ * @Assert\GroupSequence({"CustomConstraintExample", "malugroup", "maluSecondGroup"})
+ */
 class CustomConstraintExample
 {
 
@@ -31,27 +34,49 @@ class CustomConstraintExample
     }
 
     /**
-     * @Assert\Type(
-     *     type="integer",
-     *     groups={"malugroup"}
-     *     )
+     * @Assert\Length(min=3, groups={"malugroup"})
+     * @Assert\NotBlank(groups={"malugroup"})
      */
-    protected $number;
+    protected $secondTitle;
 
     /**
      * @return mixed
      */
-    public function getNumber()
+    public function getSecondTitle()
     {
-        return $this->number;
+        return $this->secondTitle;
     }
 
     /**
-     * @param mixed $number
+     * @param mixed $secondTitle
      */
-    public function setNumber($number)
+    public function setSecondTitle($secondTitle)
     {
-        $this->number = $number;
+        $this->secondTitle = $secondTitle;
     }
+
+    /**
+     * @Assert\Length(min=3, groups={"maluSecondGroup"})
+     * @Assert\NotBlank(groups={"maluSecondGroup"})
+     */
+    protected $thirdTitle;
+
+    /**
+     * @return mixed
+     */
+    public function getThirdTitle()
+    {
+        return $this->thirdTitle;
+    }
+
+    /**
+     * @param mixed $thirdTitle
+     */
+    public function setThirdTitle($thirdTitle)
+    {
+        $this->thirdTitle = $thirdTitle;
+    }
+
+
 
 }
