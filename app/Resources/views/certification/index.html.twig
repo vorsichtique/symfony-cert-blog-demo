@@ -12,6 +12,7 @@
         <li><a href="{{ path('certification_service_manuel_configuration') }}">Manuel Configuration</a></li>
         <li><a href="{{ path('certification_basic_validation') }}">Basic validation</a></li>
         <li><a href="{{ path('certification_php_object_validation') }}">PHP object validation</a></li>
+        <li><a href="{{ path('certification_custom_constraint') }}">Custom constraint</a></li>
     </ul>
 
     {% if form_default_validation is defined %}
@@ -26,6 +27,14 @@
             {{ form_widget(form_php_object_validation) }}
             {{ form_end(form_php_object_validation) }}
     {% endif %}
+
+    {% if form_custom_constraint is defined %}
+        <h1>Custom Constraint</h1>
+        {{ form_start(form_custom_constraint) }}
+        {{ form_widget(form_custom_constraint) }}
+        {{ form_end(form_custom_constraint) }}
+    {% endif %}
+
     <br>
     <br>
     {% for label, messages in app.flashes %}

@@ -4,6 +4,7 @@
 namespace CertificationBundle\Controller;
 
 use AppBundle\Exception\StrunzException;
+use CertificationBundle\Entity\CustomConstraintExample;
 use CertificationBundle\Entity\ValidationExample;
 use CertificationBundle\Event\MaluEvent;
 use CertificationBundle\MaluService\ManualWiring;
@@ -137,10 +138,7 @@ class DefaultController extends Controller
     /**
      * @Route("/service/php-object-validation", name="certification_php_object_validation")
      */
-    public function phpObjectValidationExampleAction(Request $request, ValidationExample $validationExample = null){
-        if (!$validationExample){
-            $validationExample = new ValidationExample();
-        }
+    public function phpObjectValidationExampleAction(Request $request, ValidationExample $validationExample){
 
         $form = $this->createForm(FormType::class, $validationExample);
         $form
@@ -154,6 +152,22 @@ class DefaultController extends Controller
         $this->addFlash('notice', 'Is form valid? ->' . $form->isValid());
 
         return $this->render('certification/index.html.twig', ['form_php_object_validation' => $form->createView()]);
+
+    }
+
+    /**
+     * @Route("/service/custom-constraint", name="certification_custom_constraint")
+     */
+    public function customConstraintAction(Request $request, CustomConstraintExample $cce){
+
+        $form = $this->createForm(FormType::class, $cce);
+
+        $form->add('title', TextType::class, ['required' => false])
+            ->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+
+        return $this->render('certification/index.html.twig', ['form_custom_constraint' => $form->createView()]);
 
     }
 
