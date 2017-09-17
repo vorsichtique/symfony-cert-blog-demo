@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Malu's Symfony Demo Application!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %}
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+        {% endblock %}
     </head>
     <body>
         {% block outerbody %}{% endblock %}

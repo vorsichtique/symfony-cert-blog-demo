@@ -31,7 +31,9 @@ class MaluEventSubscriber implements EventSubscriberInterface
     }
 
     public function onMaluEvent(MaluEvent $event){
+        @trigger_error('Malu sendet deprecation', E_USER_DEPRECATED);
+
         $this->logger->info('malu event received');
-        dump($event->getMessage());
+       // dump($event->getMessage());
     }
 }

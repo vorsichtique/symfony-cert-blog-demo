@@ -1,0 +1,9 @@
+{% extends 'certification/index.html.twig' %}
+
+{% block outerbody %}
+    {{ dump(app) }}
+
+    {{ global_variable }}
+
+    {{ parent() }}
+{% endblock %}

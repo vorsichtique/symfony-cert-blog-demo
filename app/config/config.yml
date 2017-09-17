@@ -42,6 +42,8 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'form/fields.html.twig'
+    globals:
+        global_variable: '%twig_global_variable%'
 
 # Doctrine Configuration
 doctrine:
@@ -72,3 +74,9 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+#certification_bundle:
+#    path: /certification/twig
+#    defaults:
+#        _controller: FrameworkBundle:Template:template
+#        template:    certification/twig.html.twig

@@ -15,7 +15,7 @@ class DefaultControllerTest extends WebTestCase
         //$crawler = $client->request('GET','/certification/dispatcher/');
         $client->request('GET','/certification/dispatcher/');
         $profile = $client->getProfile();
-        dump($profile->getStatusCode());
+       // dump($profile->getStatusCode());
         $this->assertContains(
             'malu.event dispatched',
             $client->getResponse()->getContent()
@@ -47,7 +47,7 @@ class DefaultControllerTest extends WebTestCase
 
         $history = $client->getHistory();
 
-        dump($history);
+      //  dump($history);
 
     }
 }

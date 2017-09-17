@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Blog: {{ parent() }}
+{% endblock %}
+
 {% block outerbody %}
 <a href="{{ path('homepage') }}">home</a>
 <a href="{{ path('blog_index') }}">blog</a>

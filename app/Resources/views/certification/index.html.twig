@@ -1,37 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block outerbody %}
-    <p>
-        <a href="{{ path('homepage') }}">Home</a>
-    </p>
+{% block title %}
+    Certification: {{ parent() }}
+{% endblock %}
 
-    <ul>
-        <li><a href="{{ path('certification_exception') }}">Strunz Exception</a></li>
-        <li><a href="{{ path('certification_dispatcher') }}">Event Dispatcher</a></li>
-        <li><a href="{{ path('certification_service_parameter_injection') }}">Service Parameter Injection</a></li>
-        <li><a href="{{ path('certification_service_manuel_wiring') }}">Manuel Wiring</a></li>
-        <li><a href="{{ path('certification_service_manuel_configuration') }}">Manuel Configuration</a></li>
-        <li><a href="{{ path('certification_basic_validation') }}">Basic validation</a></li>
-        <li><a href="{{ path('certification_php_object_validation') }}">PHP object validation</a></li>
-        <li><a href="{{ path('certification_custom_constraint') }}">Custom constraint</a></li>
-        <li><a href="{{ path('certification_custom_constraint_and_group') }}">Custom constraint and group validation</a></li>
-        <li><a href="{{ path('certification_custom_constraint_and_group_and_sequence') }}">Custom constraint and group validation and group sequence</a></li>
-        <li><a href="{{ path('certification_serializer') }}">Serializer</a></li>
-        <li><a href="{{ path('certification_process') }}">Process</a></li>
-        <li><a href="{{ path('certification_data_collector') }}">Data Collector</a></li>
-    </ul>
+{% block outerbody %}
+
+    {{ include('certification/nav.html.twig') }}
 
     {% if form_default_validation is defined %}
-            {{ form_start(form_default_validation) }}
-            {{ form_widget(form_default_validation) }}
-            {{ form_end(form_default_validation) }}
+        {{ form_start(form_default_validation) }}
+        {{ form_widget(form_default_validation) }}
+        {{ form_end(form_default_validation) }}
     {% endif %}
 
     {% if form_php_object_validation is defined %}
         <h1>PHP Object Validation</h1>
-            {{ form_start(form_php_object_validation) }}
-            {{ form_widget(form_php_object_validation) }}
-            {{ form_end(form_php_object_validation) }}
+        {{ form_start(form_php_object_validation) }}
+        {{ form_widget(form_php_object_validation) }}
+        {{ form_end(form_php_object_validation) }}
     {% endif %}
 
     {% if form_custom_constraint is defined %}
@@ -50,9 +37,13 @@
 
     {% if form_custom_constraint_and_group_and_sequence is defined %}
         <p>
-            As you have already seen in the previous section, the Default group and the group containing the class name (e.g. User) were identical. However, when using Group Sequences, they are no longer identical. The Default group will now reference the group sequence, instead of all constraints that do not belong to any group.
+            As you have already seen in the previous section, the Default group and the group containing the class name
+            (e.g. User) were identical. However, when using Group Sequences, they are no longer identical. The Default
+            group will now reference the group sequence, instead of all constraints that do not belong to any group.
             <br>
-            This means that you have to use the {ClassName} (e.g. User) group when specifying a group sequence. When using Default, you get an infinite recursion (as the Default group references the group sequence, which will contain the Default group which references the same group sequence, ...).
+            This means that you have to use the {ClassName} (e.g. User) group when specifying a group sequence. When
+            using Default, you get an infinite recursion (as the Default group references the group sequence, which will
+            contain the Default group which references the same group sequence, ...).
             <a href="https://symfony.com/doc/current/validation/sequence_provider.html">source</a>
         </p>
         <h1>Custom Constraint and group sequence</h1>
