@@ -80,3 +80,8 @@ swiftmailer:
 #    defaults:
 #        _controller: FrameworkBundle:Template:template
 #        template:    certification/twig.html.twig
+
+certification:
+  sub:
+    integerValue: 1
+    scalarValue: I_live_in_the_config

@@ -35,6 +35,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        //dump($GLOBALS['malu']);
         return $this->render('certification/index.html.twig');
     }
 
